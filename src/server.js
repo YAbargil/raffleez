@@ -5,10 +5,12 @@ import { isAuthorized } from "./auth.js";
 import router from "./router.js";
 import { createUser, loginUser } from "./user.js";
 import userRouter from "./userroutes.js";
+import cors from "cors";
 const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.status(200).send({ msg: "Homepage" });

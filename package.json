@@ -9,7 +9,6 @@
     "start": "node src/index.js"
   },
   "dependencies": {
-    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -17,7 +16,6 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.0",
-    "mongoose-sequence": "^5.3.1",
     "morgan": "^1.10.0",
     "node-fetch": "^3.3.0",
     "nodemailer": "^6.9.1",

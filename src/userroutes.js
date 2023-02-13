@@ -8,14 +8,8 @@ import { notifyResults } from "./notifier.js";
 import { Raffle } from "../models/rafflemodel.js";
 import { User } from "../models/usermodel.js";
 
+//myraffles/
 const userRouter = Router();
-
-///return all raffles
-userRouter.get("/", async (req, res) => {
-  const username = res.username;
-  const user = await User.findOne({ username: username });
-  res.status(200).send({ raffles: user.raffles });
-});
 
 userRouter.post("/create", isProductExist, raffleHandler, async (req, res) => {
   let params = req.body;
@@ -88,6 +82,18 @@ userRouter.get("/:raffleId/end", isRaffleExist, async (req, res) => {
     console.log(err);
     res.status(500).send({ msg: err.message });
   }
+});
+
+userRouter.get("/", async (req, res) => {
+  const username = res.username;
+  console.log(username);
+  const user = await User.findOne({ username: username });
+  if (!user) {
+    res.status(200).send({ raffles: [] });
+  }
+  let raffles = user.raffles;
+  raffles = await Raffle.find({ raffleId: { $in: raffles } });
+  res.status(200).send({ raffles });
 });
 
 export default userRouter;
