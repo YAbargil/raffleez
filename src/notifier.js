@@ -37,7 +37,7 @@ export const notifyResults = async (participants, raffle, status) => {
   let mail_config;
   participants.forEach(async (p) => {
     mail_config = {
-      from: "sakikakisaki@gmail.com",
+      from: process.env.USER_EMAIL,
       to: p.email,
       subject: subject,
       template: template,
