@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import * as dotenv from "dotenv";
 import hbs from "nodemailer-express-handlebars";
 import path from "path";
+
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
