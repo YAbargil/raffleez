@@ -18,6 +18,7 @@ const productSchema = new mongoose.Schema({
     require: true,
   },
 });
+
 const nomineeSchema = new mongoose.Schema({
   email: {
     type: String,
