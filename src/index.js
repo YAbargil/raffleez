@@ -3,9 +3,9 @@ dotenv.config();
 import app from "./server.js";
 import { connectDB } from "./connect.js";
 
-const base_url = "localhost" || process.env.BASE_URL;
-const port = 3003 || process.env.PORT;
-const mongodb_url = "mongodb://localhost/project"; //|| process.env.DB_URI;
+const base_url = process.env.BASE_URL || "localhost";
+const port = process.env.PORT || 3003;
+const mongodb_url = process.env.DB_URI || "mongodb://localhost/project";
 
 const start = async function () {
   await connectDB(mongodb_url);
