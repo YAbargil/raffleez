@@ -6,6 +6,7 @@ import router from "./router.js";
 import { createUser, loginUser } from "./user.js";
 import userRouter from "./userroutes.js";
 import cors from "cors";
+import { Raffle } from "../models/rafflemodel.js";
 const app = express();
 
 app.use(morgan("dev"));
@@ -14,6 +15,11 @@ app.use(cors());
 
 app.get("/", (req, res) => {
   res.status(200).send({ msg: "Homepage" });
+});
+
+app.get("/allraffles", async (req, res) => {
+  const raffles = await Raffle.find({});
+  res.status(200).send({ raffles });
 });
 app.use("/raffle", router);
 
@@ -27,7 +33,4 @@ app.post("/login", isUserExists, loginUser, async (req, res) => {
   res.status(202).send(res.user);
 });
 
-app.all("*", (req, res) => {
-  res.status(404).send({ msg: "404 - Unknown Path" });
-});
 export default app;
