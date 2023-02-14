@@ -7,6 +7,7 @@ import {
   raffleHandler,
 } from "../controllers/rafflecontroller.js";
 import { notifyResults } from "./notifier.js";
+import { isEmailExists } from "../controllers/rafflecontroller.js";
 //import fetch from "node-fetch";
 
 //raffle
@@ -63,6 +64,7 @@ router.post(
   "/:raffleId/enter",
   isRaffleExist,
   entryHandler,
+  isEmailExists,
   async (req, res) => {
     let raffle = res.raffle;
     const { name, email } = req.body;

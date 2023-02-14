@@ -62,15 +62,7 @@ const entryValidator = [
     .withMessage("name must be less than 16 chars long")
     .exists()
     .withMessage("name is required"),
-  body("email")
-    .normalizeEmail()
-    .isEmail()
-    .withMessage("email is invalid")
-    .custom((email) => {
-      if (isEmailExists(email)) {
-        return Promise.reject("Already entered the raffle");
-      }
-    }),
+  body("email").isEmail().withMessage("email is invalid"),
 ];
 
 const recordErrors = async (req, res, next) => {
@@ -84,9 +76,14 @@ const recordErrors = async (req, res, next) => {
   }
 };
 
-const isEmailExists = (email) => {
-  const entry = res.raffle.nominees.find({ email: email });
-  return entry !== undefined;
+export const isEmailExists = (req, res, next) => {
+  const { email } = req.body;
+  const entry = res.raffle.nominees.find((e) => e.email == email);
+  if (entry !== undefined) {
+    res.send({ msg: "Email already in use" });
+  } else {
+    next();
+  }
 };
 
 export const entryHandler = [entryValidator, recordErrors];
