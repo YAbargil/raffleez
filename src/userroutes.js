@@ -64,6 +64,7 @@ userRouter.get("/:raffleId/end", isRaffleExist, async (req, res) => {
   let winners = [];
   const nominees = chooseWinners(raffle.quantity, raffle.nominees, winners);
   raffle.nominees = nominees;
+  raffle.active = false;
   try {
     raffle = await raffle.save();
     const winnersDetails = winners.map((w) => {
@@ -83,6 +84,28 @@ userRouter.get("/:raffleId/end", isRaffleExist, async (req, res) => {
     res.status(500).send({ msg: err.message });
   }
 });
+
+userRouter.get(
+  "/:raffleId/participants/:index",
+  isRaffleExist,
+  async (req, res) => {
+    const raffle = res.raffle;
+    const lastNominee = raffle.nominees[raffle.nominees.length - 1];
+    raffle.nominees.splice(req.params.index, 1, {
+      name: lastNominee.name,
+      email: lastNominee.email,
+      ticket: req.params.index,
+    });
+    raffle.nominees.pop();
+    try {
+      await raffle.save();
+      res.status(200).send({ msg: "Participant deleted" });
+    } catch (error) {
+      console.log("Error:", error);
+      res.status(500).send({ msg: "Couldn't delete participant" });
+    }
+  }
+);
 
 userRouter.get("/", async (req, res) => {
   const username = res.username;

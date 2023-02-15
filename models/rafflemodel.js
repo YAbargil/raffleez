@@ -56,6 +56,10 @@ const raffleSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  active: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export const Product = mongoose.model("Product", productSchema);
