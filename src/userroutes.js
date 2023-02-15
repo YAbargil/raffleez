@@ -43,7 +43,7 @@ userRouter.get("/:raffleId", isRaffleExist, async (req, res) => {
 });
 
 const chooseWinners = function (numOfWinners, nomineesArr, winnersArr) {
-  const isAlreadyChosen = raffle.nominees.find({ winner: true });
+  const isAlreadyChosen = nomineesArr.find((n) => n.winner === true);
   if (isAlreadyChosen === undefined) {
     const randomSet = new Set();
     const length = nomineesArr.length - 1;
