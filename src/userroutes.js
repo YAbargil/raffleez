@@ -46,8 +46,9 @@ const chooseWinners = function (numOfWinners, nomineesArr, winnersArr) {
   const isAlreadyChosen = nomineesArr.find((n) => n.winner === true);
   if (isAlreadyChosen === undefined) {
     const randomSet = new Set();
-    const length = nomineesArr.length - 1;
-    while (randomSet.size < numOfWinners) {
+    const length = nomineesArr.length;
+    console.log(length);
+    while (randomSet.size <= numOfWinners) {
       let randomNumber = Math.floor(Math.random() * length);
       randomSet.add(randomNumber);
     }
@@ -62,7 +63,12 @@ const chooseWinners = function (numOfWinners, nomineesArr, winnersArr) {
 userRouter.get("/:raffleId/end", isRaffleExist, async (req, res) => {
   let raffle = res.raffle;
   let winners = [];
-  const nominees = chooseWinners(raffle.quantity, raffle.nominees, winners);
+  console.log("here");
+  const numofWinners =
+    (raffle.quantity > raffle.nominees.length
+      ? raffle.nominees.length
+      : raffle.quantity) - 1;
+  const nominees = chooseWinners(numofWinners, raffle.nominees, winners);
   raffle.nominees = nominees;
   raffle.active = false;
   try {
@@ -76,8 +82,10 @@ userRouter.get("/:raffleId/end", isRaffleExist, async (req, res) => {
         email: n.email,
         name: n.name,
       }));
-    await notifyResults(winnersDetails, raffle, "W");
-    await notifyResults(restDetails, raffle, "L");
+    console.log("Winners:", winnersDetails);
+    console.log("Losers:", restDetails);
+    //  await notifyResults(winnersDetails, raffle, "W");
+    //  await notifyResults(restDetails, raffle, "L");
     res.status(200).send({ msg: "Emails sent!" });
   } catch (err) {
     console.log(err);
