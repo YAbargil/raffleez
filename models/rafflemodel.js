@@ -23,6 +23,8 @@ const nomineeSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    index: true,
+    sparse: true,
   },
   name: {
     type: String,
@@ -51,7 +53,11 @@ const raffleSchema = new mongoose.Schema({
     required: true,
   },
   product: productSchema,
-  nominees: [nomineeSchema],
+  nominees: {
+    type: [nomineeSchema],
+    index: true,
+    sparse: true,
+  },
   quantity: {
     type: Number,
     required: true,

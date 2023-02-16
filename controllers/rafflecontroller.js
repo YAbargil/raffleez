@@ -27,7 +27,7 @@ export const isProductExist = async (req, res, next) => {
 const raffleValidator = [
   body("name")
     .isLength({ min: 4 })
-    .withMessage("name must be at least 2 chars long")
+    .withMessage("name must be at least 4 chars long")
     .isLength({ max: 25 })
     .withMessage(" name must be less than 25 chars long")
     .exists()
