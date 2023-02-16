@@ -84,8 +84,8 @@ userRouter.get("/:raffleId/end", isRaffleExist, async (req, res) => {
       }));
     console.log("Winners:", winnersDetails);
     console.log("Losers:", restDetails);
-    //  await notifyResults(winnersDetails, raffle, "W");
-    //  await notifyResults(restDetails, raffle, "L");
+    await notifyResults(winnersDetails, raffle, "W");
+    await notifyResults(restDetails, raffle, "L");
     res.status(200).send({ msg: "Emails sent!" });
   } catch (err) {
     console.log(err);
