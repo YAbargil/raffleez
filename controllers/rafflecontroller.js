@@ -14,7 +14,7 @@ export const isRaffleExist = async (req, res, next) => {
 
 export const isProductExist = async (req, res, next) => {
   const { productId } = req.body;
-  const product = await Product.findOne({ productid: productId });
+  const product = await Product.findOne({ _id: productId });
   console.log(product);
   if (!product) {
     res.status(500).send({ msg: "No matching product" });
