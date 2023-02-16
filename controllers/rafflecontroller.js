@@ -42,11 +42,7 @@ const raffleValidator = [
   //     throw new Error("Quantity can't be less than 1.");
   //   }
   // }),
-  body("productId")
-    .exists()
-    .withMessage("Must enter a value for productId")
-    .isInt()
-    .withMessage("productId must be integer number only"),
+  body("productId").exists().withMessage("Must enter a value for productId"),
   // .custom((num) => {
   //   if (num < 1) {
   //     return Promise.reject("productId can't be less than 1.");
